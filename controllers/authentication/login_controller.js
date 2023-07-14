@@ -29,6 +29,7 @@ const loginController = async (req, res) => {
         const token = generateToken(data);
         return res.status(200).json({
           message: "Login success",
+          IsSuccess:true,
           id:data[0].id,
           userName:data[0].userName,
           groupId:data[0].userGroupId,

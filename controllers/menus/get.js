@@ -31,13 +31,25 @@ const GetMenusController=async(req,res)=>{
                                 mnData
                             ]
                         },[])
+                    }else{
+                        MenuData=await GetUserMenuPermissionWithUserId(UserId,mlData.ModuleId,res);
+
+                        if(MenuData.length){
+                            Menus=MenuData.reduce((preMenu,mnData)=>{
+                                return[
+                                    ...preMenu,
+                                    mnData
+                                ]
+                            },[])
+                        }
                     }
                     return[
                         ...await preModule,
                         {
                             Id:mlData.id,
                             ModuleId:mlData.ModuleId,
-                            menus:MenuData
+                            ModuleName:mlData.name,
+                            menus:Menus
                         }
                     ]
                 },[])
@@ -50,7 +62,7 @@ const GetMenusController=async(req,res)=>{
             //return res.status(200).json({IsSuccess:true,data:ModuleLists})
 
         }catch(err){
-            return res.status(500).jsonb({message:'Internal Server Error!'});
+            return res.status(500).json({message:'Internal Server Error!'});
         }
     }else{
         return res.status(500).json({message:'Internal Server Error!'});
@@ -60,7 +72,10 @@ const GetMenusController=async(req,res)=>{
 
 const GetUserModulePermission = async (UserId) => {
     try {
-        let query=`Select * from ${TABLE.MODULE_PERMISSION} where UserId=${UserId}`;
+        let query=`Select mdp.id , mdp.ModuleId , m.name from 
+        modulepermission  mdp
+        inner join modules m on mdp.ModuleId=m.id
+        where mdp.UserId=${UserId} and mdp.IsActive=1`;
   
         const data = await dao.execute_value(query);
 
@@ -74,7 +89,7 @@ const GetUserMenuPermissionWithGroupId = async (GroupId,ModuleId,res) => {
    if(GroupId && ModuleId){
         try {
             let query=`Select 
-            pg.id as id , m.ModuleId, pg.MenuId , m.name as name,m.IconName,m.path
+            pg.id as id , m.ModuleId, pg.MenuId , m.name as name,m.IconName,m.path , pg.IsCreate,pg.IsUpdate,pg.IsReport,pg.IsView
             from permissiongroup pg
             inner join menus m on pg.MenuId=m.id
             where pg.IsActive=1 AND pg.GroupId=${GroupId} AND m.ModuleId=${ModuleId} AND m.IsActive=1`;
@@ -85,28 +100,28 @@ const GetUserMenuPermissionWithGroupId = async (GroupId,ModuleId,res) => {
         } catch (error) {
             throw error;
         }
-   }else{
-    return res.status(500).json("Internal Server Error!") 
-   }
+    }else{
+        return res.status(500).json("Internal Server Error!") 
+    }
 };
 
 const GetUserMenuPermissionWithUserId = async (UserId,ModuleId,res) => {
     if(UserId && ModuleId){
-         try {
-             let query=`Select 
-             pg.id as id , m.ModuleId, pg.MenuId , m.name as name,m.IconName,m.path
-             from permissions pg
-             inner join menus m on pg.MenuId=m.id
-             where pg.IsActive=1 AND pg.UserId=${UserId} AND m.ModuleId=${ModuleId} AND m.IsActive=1`;
-     
-             const data = await dao.execute_value(query);
- 
-             return data;
-         } catch (error) {
-             throw error;
-         }
+        try {
+            let query=`Select 
+            pg.id as id , m.ModuleId, pg.MenuId , m.name as name,m.IconName,m.path,pg.IsCreate,pg.IsUpdate,pg.IsReport,pg.IsView
+            from permissions pg
+            inner join menus m on pg.MenuId=m.id
+            where pg.IsActive=1 AND pg.UserId=${UserId} AND m.ModuleId=${ModuleId} AND m.IsActive=1`;
+    
+            const data = await dao.execute_value(query);
+
+            return data;
+        } catch (error) {
+            throw error;
+        }
     }else{
-     return res.status(500).json("Internal Server Error!") 
+        return res.status(500).json("Internal Server Error!") 
     }
  };
 
