@@ -7,7 +7,7 @@ const GetMenusController =require("../controllers/menus/get");
 
 userRouter.get(
   API.API_CONTEXT + API.GET_MENUS,
-  //authMiddleware,
+  authMiddleware,
   GetMenusController
 );
 
