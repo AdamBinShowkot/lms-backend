@@ -4,6 +4,10 @@ module.exports = {
     LOGIN: "login",
     REGISTER: "register",
 
+    COMMON_GENDER:'common/getGender',
+    COMMON_OCCUPATION:'common/getOccupation',
+    COMMON_BLOOD_GROUP:'common/getBloodGroup',
+    
     GET_MENUS:"getMenus",
 
     GET_APPROVE_USER:'user/approver',
