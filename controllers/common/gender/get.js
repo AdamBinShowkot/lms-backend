@@ -12,7 +12,7 @@ const GetGenderController=async(req,res)=>{
 
 const getData=async(res)=>{
     try{
-        const sqlQueries=`Select * from sex`;
+        const sqlQueries=`Select * from sex where IsActive=1`;
         const data=await dao.execute_value(sqlQueries);
 
         return data;

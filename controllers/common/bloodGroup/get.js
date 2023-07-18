@@ -11,7 +11,7 @@ const GetBloodGroupController=async(req,res)=>{
 }
 const getData=async(res)=>{
     try {
-        let query=`Select * from bloodgroup`;
+        let query=`Select * from bloodgroup where IsActive=1`;
   
         const data = await dao.execute_value(query);
 
