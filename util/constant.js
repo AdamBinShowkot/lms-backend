@@ -7,6 +7,9 @@ module.exports = {
     COMMON_GENDER:'common/getGender',
     COMMON_OCCUPATION:'common/getOccupation',
     COMMON_BLOOD_GROUP:'common/getBloodGroup',
+
+    CUP_BOARD_CREATE:'cupboard/create',
+    CUP_BOARD_LISTS:'cupboard/lists',
     
     GET_MENUS:"getMenus",
 
