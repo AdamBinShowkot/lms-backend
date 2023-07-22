@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2023 at 03:28 AM
+-- Generation Time: Jul 22, 2023 at 02:17 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -62,6 +62,44 @@ CREATE TABLE `cupboard` (
   `description` text DEFAULT NULL,
   `rowNo` int(11) DEFAULT NULL,
   `colNo` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `cupboard`
+--
+
+INSERT INTO `cupboard` (`id`, `name`, `description`, `rowNo`, `colNo`, `created_at`, `updated_at`) VALUES
+(1, 'Test', 'Test Description', 1, 3, '2023-07-19 00:45:11', '2023-07-19 00:45:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `donner`
+--
+
+CREATE TABLE `donner` (
+  `id` int(11) NOT NULL,
+  `memberShipNo` int(11) DEFAULT NULL,
+  `createDate` date DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `dateOfBirth` date DEFAULT NULL,
+  `fatherName` varchar(100) DEFAULT NULL,
+  `motherName` varchar(100) DEFAULT NULL,
+  `presentAddress` varchar(1000) DEFAULT NULL,
+  `permanentAddress` varchar(1000) DEFAULT NULL,
+  `mobileNo` varchar(50) DEFAULT NULL,
+  `whatsAppNo` varchar(500) DEFAULT NULL,
+  `occupation` int(11) DEFAULT NULL,
+  `bloodGroup` int(11) DEFAULT NULL,
+  `qualification` varchar(500) DEFAULT NULL,
+  `institute` varchar(500) DEFAULT NULL,
+  `gender` int(11) DEFAULT NULL,
+  `isFemale` int(11) DEFAULT NULL,
+  `image` int(11) DEFAULT NULL,
+  `nid` int(11) DEFAULT NULL,
+  `isNid` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -153,6 +191,19 @@ INSERT INTO `modules` (`id`, `name`, `description`, `ProjectId`, `IconName`, `Is
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `nidimage`
+--
+
+CREATE TABLE `nidimage` (
+  `id` int(11) NOT NULL,
+  `urlLink` varchar(1000) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `occupation`
 --
 
@@ -160,8 +211,30 @@ CREATE TABLE `occupation` (
   `id` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `occValue` varchar(100) DEFAULT NULL,
   `IsActive` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `occupation`
+--
+
+INSERT INTO `occupation` (`id`, `name`, `description`, `IsActive`, `created_at`, `updated_at`) VALUES
+(1, 'Student', NULL, 1, '2023-07-21 09:15:28', '2023-07-21 09:15:28'),
+(2, 'Job Holder', NULL, 1, '2023-07-21 09:15:28', '2023-07-21 09:15:28'),
+(3, 'Business Man', NULL, 1, '2023-07-21 09:16:11', '2023-07-21 09:16:11'),
+(4, 'Others', NULL, 1, '2023-07-21 09:47:16', '2023-07-21 09:47:16');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `passportimage`
+--
+
+CREATE TABLE `passportimage` (
+  `id` int(11) NOT NULL,
+  `urlLink` varchar(1000) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -354,6 +427,14 @@ ALTER TABLE `cupboard`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `donner`
+--
+ALTER TABLE `donner`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `image` (`image`),
+  ADD KEY `nid` (`nid`);
+
+--
 -- Indexes for table `menus`
 --
 ALTER TABLE `menus`
@@ -377,9 +458,21 @@ ALTER TABLE `modules`
   ADD KEY `ProjectId` (`ProjectId`);
 
 --
+-- Indexes for table `nidimage`
+--
+ALTER TABLE `nidimage`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `occupation`
 --
 ALTER TABLE `occupation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `passportimage`
+--
+ALTER TABLE `passportimage`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -442,6 +535,12 @@ ALTER TABLE `bloodgroup`
 -- AUTO_INCREMENT for table `cupboard`
 --
 ALTER TABLE `cupboard`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `donner`
+--
+ALTER TABLE `donner`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -463,9 +562,21 @@ ALTER TABLE `modules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `nidimage`
+--
+ALTER TABLE `nidimage`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `occupation`
 --
 ALTER TABLE `occupation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `passportimage`
+--
+ALTER TABLE `passportimage`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -513,6 +624,13 @@ ALTER TABLE `usertype`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `donner`
+--
+ALTER TABLE `donner`
+  ADD CONSTRAINT `donner_ibfk_1` FOREIGN KEY (`image`) REFERENCES `passportimage` (`id`),
+  ADD CONSTRAINT `donner_ibfk_2` FOREIGN KEY (`nid`) REFERENCES `nidimage` (`id`);
 
 --
 -- Constraints for table `menus`
