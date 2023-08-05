@@ -10,6 +10,9 @@ module.exports = {
 
     CUP_BOARD_CREATE:'cupboard/create',
     CUP_BOARD_LISTS:'cupboard/lists',
+
+    DONNER_CREATE:'donner/create',
+    DONNER_LISTS:'donner/lists',
     
     GET_MENUS:"getMenus",
 

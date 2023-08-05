@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2023 at 02:17 AM
+-- Generation Time: Aug 05, 2023 at 02:17 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -81,28 +81,36 @@ INSERT INTO `cupboard` (`id`, `name`, `description`, `rowNo`, `colNo`, `created_
 
 CREATE TABLE `donner` (
   `id` int(11) NOT NULL,
-  `memberShipNo` int(11) DEFAULT NULL,
-  `createDate` date DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `dateOfBirth` date DEFAULT NULL,
+  `memberShipNo` varchar(100) DEFAULT NULL,
+  `createDate` datetime DEFAULT NULL,
+  `name` varchar(500) DEFAULT NULL,
+  `dateOfBirth` date NOT NULL,
   `fatherName` varchar(100) DEFAULT NULL,
   `motherName` varchar(100) DEFAULT NULL,
-  `presentAddress` varchar(1000) DEFAULT NULL,
-  `permanentAddress` varchar(1000) DEFAULT NULL,
-  `mobileNo` varchar(50) DEFAULT NULL,
-  `whatsAppNo` varchar(500) DEFAULT NULL,
+  `presentAddress` varchar(500) DEFAULT NULL,
+  `permanentAddress` varchar(500) DEFAULT NULL,
+  `mobileNo` varchar(100) DEFAULT NULL,
+  `whatsAppNo` varchar(100) DEFAULT NULL,
   `occupation` int(11) DEFAULT NULL,
-  `bloodGroup` int(11) DEFAULT NULL,
+  `bloodgroup` int(11) DEFAULT NULL,
   `qualification` varchar(500) DEFAULT NULL,
   `institute` varchar(500) DEFAULT NULL,
   `gender` int(11) DEFAULT NULL,
   `isFemale` int(11) DEFAULT NULL,
-  `image` int(11) DEFAULT NULL,
-  `nid` int(11) DEFAULT NULL,
+  `imageId` int(11) DEFAULT NULL,
+  `nidId` int(11) DEFAULT NULL,
   `isNid` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `donner`
+--
+
+INSERT INTO `donner` (`id`, `memberShipNo`, `createDate`, `name`, `dateOfBirth`, `fatherName`, `motherName`, `presentAddress`, `permanentAddress`, `mobileNo`, `whatsAppNo`, `occupation`, `bloodgroup`, `qualification`, `institute`, `gender`, `isFemale`, `imageId`, `nidId`, `isNid`, `created_at`, `updated_at`) VALUES
+(1, '1002', '2023-08-05 06:01:56', 'Asib', '2023-08-04', 'Showkot Ali', 'Akramunnhar', 'Demo...', 'Demo...', '04516556', '558595291', 1, 1, 'jkkk', 'ffdfdf', 1, 0, 1, 1, 1, '2023-08-05 00:15:25', '2023-08-05 00:15:25'),
+(2, '1002', '2023-08-05 06:01:56', 'Asib', '2023-08-04', 'Showkot Ali', 'Akramunnhar', 'Demo...', 'Demo...', '04516556', '558595291', 1, 1, 'jkkk', 'ffdfdf', 1, 0, 1, 1, 1, '2023-08-05 00:16:09', '2023-08-05 00:16:09');
 
 -- --------------------------------------------------------
 
@@ -200,6 +208,13 @@ CREATE TABLE `nidimage` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `nidimage`
+--
+
+INSERT INTO `nidimage` (`id`, `urlLink`, `created_at`, `updated_at`) VALUES
+(1, 'tessttt', '2023-08-04 12:36:04', '2023-08-04 12:36:04');
 
 -- --------------------------------------------------------
 
@@ -431,8 +446,8 @@ ALTER TABLE `cupboard`
 --
 ALTER TABLE `donner`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `image` (`image`),
-  ADD KEY `nid` (`nid`);
+  ADD KEY `imageId` (`imageId`),
+  ADD KEY `nidId` (`nidId`);
 
 --
 -- Indexes for table `menus`
@@ -541,7 +556,7 @@ ALTER TABLE `cupboard`
 -- AUTO_INCREMENT for table `donner`
 --
 ALTER TABLE `donner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -565,7 +580,7 @@ ALTER TABLE `modules`
 -- AUTO_INCREMENT for table `nidimage`
 --
 ALTER TABLE `nidimage`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `occupation`
@@ -629,8 +644,8 @@ ALTER TABLE `usertype`
 -- Constraints for table `donner`
 --
 ALTER TABLE `donner`
-  ADD CONSTRAINT `donner_ibfk_1` FOREIGN KEY (`image`) REFERENCES `passportimage` (`id`),
-  ADD CONSTRAINT `donner_ibfk_2` FOREIGN KEY (`nid`) REFERENCES `nidimage` (`id`);
+  ADD CONSTRAINT `donner_ibfk_1` FOREIGN KEY (`imageId`) REFERENCES `nidimage` (`id`),
+  ADD CONSTRAINT `donner_ibfk_2` FOREIGN KEY (`nidId`) REFERENCES `nidimage` (`id`);
 
 --
 -- Constraints for table `menus`
